@@ -1,0 +1,6 @@
+echo '{
+  "name": "onionpost",
+  "version": "1.0.0",
+  "description": "A privacy-first Reddit-inspired social platform",
+  "private": true
+}' > package.json

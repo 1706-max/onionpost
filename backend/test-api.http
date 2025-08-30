@@ -1,0 +1,80 @@
+### 1. Register User (if not already done)
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "alice@example.com",
+  "password": "password123",
+  "username": "aliceprimary",
+  "name": "Alice Primary"
+}
+
+### 2. Login as Alice
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "alice@example.com",
+  "password": "password123"
+}
+
+### 3. Create a second profile for Alice
+POST http://localhost:5000/profile/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGIxZTZmNDBiMjczNThkMDA2M2MwODgiLCJwcm9maWxlSWQiOiI2OGIxZTZmNDBiMjczNThkMDA2M2MwODkiLCJpYXQiOjE3NTY0ODk0ODIsImV4cCI6MTc1NzA5NDI4Mn0.LJnnSiQxYpCoRIHFP-6sgtvW8XRb7ckP315aSu27gZY
+Content-Type: application/json
+
+{
+  "username": "alicepublic",
+  "name": "Alice Public Profile",
+  "bio": "This is my public bio",
+  "interests": ["technology", "reading", "travel"],
+  "isAnonymous": false
+}
+
+### 4. Get Alice's profiles to find the public profile ID
+GET http://localhost:5000/profile/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGIxZTZmNDBiMjczNThkMDA2M2MwODgiLCJwcm9maWxlSWQiOiI2OGIxZTZmNDBiMjczNThkMDA2M2MwODkiLCJpYXQiOjE3NTY0ODk0ODIsImV4cCI6MTc1NzA5NDI4Mn0.LJnnSiQxYpCoRIHFP-6sgtvW8XRb7ckP315aSu27gZY
+
+### 5. Register a second user (Bob)
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "bob@example.com",
+  "password": "password123",
+  "username": "bobprimary",
+  "name": "Bob Primary"
+}
+
+### 6. Login as Bob
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "bob@example.com",
+  "password": "password123"
+}
+
+### 7. Bob views Alice's public profile (anonymous/public view)
+GET http://localhost:5000/profile/68b1e7590b27358d0063c08f
+Authorization: Bearer YeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTYiLCJwcm9maWxlSWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTciLCJpYXQiOjE3NTY0ODk1OTgsImV4cCI6MTc1NzA5NDM5OH0.X7rHFl0OPSxCBKO_sKbG9JUvZJyNQ7AWyjHdog-nZJw
+
+### 8. Bob follows Alice
+POST http://localhost:5000/friends/follow/68b1e7590b27358d0063c08f
+Authorization: Bearer YeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTYiLCJwcm9maWxlSWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTciLCJpYXQiOjE3NTY0ODk1OTgsImV4cCI6MTc1NzA5NDM5OH0.X7rHFl0OPSxCBKO_sKbG9JUvZJyNQ7AWyjHdog-nZJw
+
+### 9. Bob views Alice's profile again (follower view)
+GET http://localhost:5000/profile/68b1e7590b27358d0063c08f
+Authorization: Bearer YeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTYiLCJwcm9maWxlSWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTciLCJpYXQiOjE3NTY0ODk1OTgsImV4cCI6MTc1NzA5NDM5OH0.X7rHFl0OPSxCBKO_sKbG9JUvZJyNQ7AWyjHdog-nZJw
+
+### 10. Bob adds Alice as close friend
+POST http://localhost:5000/friends/close/68b1e7590b27358d0063c08f
+Authorization: Bearer YeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTYiLCJwcm9maWxlSWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTciLCJpYXQiOjE3NTY0ODk1OTgsImV4cCI6MTc1NzA5NDM5OH0.X7rHFl0OPSxCBKO_sKbG9JUvZJyNQ7AWyjHdog-nZJw
+
+### 11. Bob views Alice's profile again (close friend view)
+GET http://localhost:5000/profile/68b1e7590b27358d0063c08f
+Authorization: Bearer YeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTYiLCJwcm9maWxlSWQiOiI2OGIxZTc3ODBiMjczNThkMDA2M2MwOTciLCJpYXQiOjE3NTY0ODk1OTgsImV4cCI6MTc1NzA5NDM5OH0.X7rHFl0OPSxCBKO_sKbG9JUvZJyNQ7AWyjHdog-nZJw
+
+### 12. Alice views her own profile (owner view)
+GET http://localhost:5000/profile/68b1e7590b27358d0063c08f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGIxZTZmNDBiMjczNThkMDA2M2MwODgiLCJwcm9maWxlSWQiOiI2OGIxZTZmNDBiMjczNThkMDA2M2MwODkiLCJpYXQiOjE3NTY0ODk0ODIsImV4cCI6MTc1NzA5NDI4Mn0.LJnnSiQxYpCoRIHFP-6sgtvW8XRb7ckP315aSu27gZY\

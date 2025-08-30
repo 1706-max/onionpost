@@ -14,7 +14,11 @@ const Profile = require('./models/Profile');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const profileSwitchRoutes = require('./routes/profileSwitch');
-const friendsRoutes = require('./routes/friends'); // Add this
+const friendsRoutes = require('./routes/friends'); 
+const communityRoutes = require('./routes/communityRoutes');
+const postRoutes = require('./routes/postRoutes');
+const commentRoutes = require('./routes/commentRoutes');
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;

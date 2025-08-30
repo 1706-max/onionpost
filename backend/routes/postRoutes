@@ -1,0 +1,18 @@
+// backend/routes/postRoutes.js
+const express = require('express');
+const router = express.Router();
+const { createPost, getPosts, votePost } = require('../controllers/postController');
+const authMiddleware = require('../middleware/authMiddleware');
+
+// Public routes
+router.route('/')
+  .get(getPosts)
+
+// Private routes
+router.route('/')
+  .post(authMiddleware, createPost);
+
+router.route('/:id/vote')
+  .post(authMiddleware, votePost);
+
+module.exports = router;
